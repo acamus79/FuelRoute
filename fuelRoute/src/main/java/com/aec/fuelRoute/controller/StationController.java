@@ -3,6 +3,10 @@ package com.aec.fuelRoute.controller;
 import com.aec.fuelRoute.model.Station;
 import com.aec.fuelRoute.repository.StationRepository;
 import com.aec.fuelRoute.service.RouteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +26,22 @@ public class StationController {
         this.repository = repository;
     }
 
+    @Operation(summary = "Add a new station")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Station added successfully", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
+    })
     @PostMapping("/stations")
     public ResponseEntity<Void> addStation(@RequestParam String name) {
         repository.addStation(new Station(name));
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Add a new route")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Route added successfully", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid input or stations not found", content = @Content)
+    })
     @PostMapping("/routes")
     public ResponseEntity<Void> addRoute(@RequestParam String origin,
                                          @RequestParam String destination,
@@ -41,6 +55,11 @@ public class StationController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Get the optimal route between two stations")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Optimal route found", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid input or stations not found", content = @Content)
+    })
     @GetMapping("/optimal-route")
     public ResponseEntity<List<String>> getOptimalRoute(@RequestParam String origin,
                                                         @RequestParam String destination) {
