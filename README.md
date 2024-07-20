@@ -24,13 +24,24 @@ costo, una estación origen, y otra estación destino (bidireccional). El objeti
 para consultar sobre el camino óptimo para transitar desde una estación A, hasta una estación B
 minimizando costos.
 
-Para realizar esta desafio me costo mucho pensar la solucion sin untilizar SQL, pero al hacerlo me di cuenta de que se podria resolver utilizando grafos y pense que cada estacion seria un nodo del grafo las rutas el costo de las rutas el peso de cada arista, y entonces decidi utilizar el el algoritmo de los caminos minimos.
+## Solución
 
-Implemente un servicio REST para obtener el camino mas optimo entre dos estaciones de servicio. Se han implementado tres endpoints: dos de tipo POST uno para cargar estaciones de servicio, otro endpoint para cargar las rutas entre estaciones y un endpoint de tipo GET para obtener el camino optimo entre estaciones
+Al principio, fue un desafío conceptualizar la solución sin utilizar SQL. Sin embargo, me di cuenta de que el problema se podía resolver utilizando teoría de grafos. En este enfoque, cada estación se representa como un nodo del grafo y las rutas entre estaciones, con sus respectivos costos, se representan como los pesos de las aristas. Decidí utilizar el algoritmo de Dijkstra, conocido por encontrar caminos mínimos en grafos ponderados.
 
-Además, se han implementado pruebas unitarias para el controlador, el servicio, y para el algoritmo.
+## Implementación
+He desarrollado un servicio REST que permite obtener el camino más óptimo entre dos estaciones de servicio. El servicio cuenta con los siguientes endpoints:
 
-El [algoritmo de Dijkstra](https://es.wikipedia.org/wiki/Algoritmo_de_Dijkstra), también llamado algoritmo de caminos mínimos, es un algoritmo para la determinación del camino más corto dado un vértice origen al resto de los vértices en un grafo con pesos en cada arista. Su nombre se refiere a Edsger Dijkstra, quien lo describió por primera vez en 1959.
+- POST /stations: Carga de estaciones de servicio.
+- POST /routes: Carga de rutas entre estaciones, incluyendo los costos.
+- GET /optimal-route: Consulta del camino óptimo entre dos estaciones específicas.
+
+## Pruebas
+Se han implementado pruebas unitarias para verificar el correcto funcionamiento del controlador, del servicio y del algoritmo de Dijkstra.
+
+## Algoritmo de Dijkstra
+El algoritmo de Dijkstra, 
+
+El [algoritmo de Dijkstra](https://es.wikipedia.org/wiki/Algoritmo_de_Dijkstra), también conocido como algoritmo de caminos mínimos, es un método eficiente para determinar el camino más corto desde un vértice de origen a todos los demás vértices en un grafo ponderado. Fue descrito por primera vez por Edsger Dijkstra en 1959.
 
 ## Tecnologías utilizadas
 
@@ -69,13 +80,6 @@ A través de Swagger cuando la aplicación se esta ejecutando
 | Documentacion |                                                    Link                                                     |
 | :-----------: | :---------------------------------------------------------------------------------------------------------: |
 |    SWAGGER    | <a href="http://localhost:8080/swagger-ui/index.html" target="_blank">LINK</a> (sólo si se está ejecutando) |
-
-## Endpoints
-
-  - POST /api/stations
-  - POST /api/routes
-  - GET /api/optimal-route
-
 
 ![imagen](https://github.com/user-attachments/assets/20a2117c-e552-4de6-a71f-0164a1a94dd1)
   
